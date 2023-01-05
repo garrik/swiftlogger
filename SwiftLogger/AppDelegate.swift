@@ -18,6 +18,10 @@ extension Student: CustomDebugStringConvertible {
     }
 }
 
+func printToNSLog(_ string: String) {
+    NSLog(string)
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -26,7 +30,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
+   
+        Log.print = printToNSLog
+
         // Logging simple string message
         Log.d("This is a DEBUG message") // DEBUG log
         Log.e("This is an ERROR message") // ERROR log

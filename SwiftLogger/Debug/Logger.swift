@@ -32,14 +32,16 @@ enum LogEvent: String {
 ///
 /// - Parameter object: The object which is to be logged
 ///
-func print(_ object: Any) {
+func printer(_ string: String) {
     // Only allowing in DEBUG mode
     #if DEBUG
-    Swift.print(object)
+    Swift.print("\(Date().toString()) \(string)")
     #endif
 }
 
 class Log {
+    // Allow to replace printer method, e.g. to use NSLog
+    public static var print = printer
     
     static var dateFormat = "yyyy-MM-dd HH:mm:ssSSS"
     static var dateFormatter: DateFormatter {
@@ -156,7 +158,7 @@ class Log {
       guard isLoggingEnabled else {
           return
       }
-      print("\(Date().toString()) \(logEvent.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
+      Log.print("\(logEvent.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
   }
 }
 
