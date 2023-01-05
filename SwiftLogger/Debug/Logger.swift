@@ -17,12 +17,12 @@ import Foundation
 /// - warning: Log type warning
 /// - severe: Log type severe
 enum LogEvent: String {
-    case e = "[‼️]" // error
-    case i = "[ℹ️]" // info
-    case d = "[💬]" // debug
-    case v = "[🔬]" // verbose
-    case w = "[⚠️]" // warning
-    case s = "[🔥]" // severe
+    case e = "E" // error
+    case i = "I" // info
+    case d = "D" // debug
+    case v = "V" // verbose
+    case w = "W" // warning
+    case s = "S" // severe
 }
 
 
@@ -61,7 +61,7 @@ class Log {
     // MARK: - Loging methods
     
     
-    /// Logs error messages on console with prefix [‼️]
+    /// Logs error messages on console with prefix `E`
     ///
     /// - Parameters:
     ///   - object: Object or message to be logged
@@ -75,7 +75,7 @@ class Log {
         }
     }
     
-    /// Logs info messages on console with prefix [ℹ️]
+    /// Logs info messages on console with prefix `I`
     ///
     /// - Parameters:
     ///   - object: Object or message to be logged
@@ -89,7 +89,7 @@ class Log {
         }
     }
     
-    /// Logs debug messages on console with prefix [💬]
+    /// Logs debug messages on console with prefix `D`
     ///
     /// - Parameters:
     ///   - object: Object or message to be logged
@@ -103,7 +103,7 @@ class Log {
         }
     }
     
-    /// Logs messages verbosely on console with prefix [🔬]
+    /// Logs messages verbosely on console with prefix `V`
     ///
     /// - Parameters:
     ///   - object: Object or message to be logged
@@ -117,7 +117,7 @@ class Log {
         }
     }
     
-    /// Logs warnings verbosely on console with prefix [⚠️]
+    /// Logs warnings verbosely on console with prefix `W`
     ///
     /// - Parameters:
     ///   - object: Object or message to be logged
@@ -131,7 +131,7 @@ class Log {
         }
     }
     
-    /// Logs severe events on console with prefix [🔥]
+    /// Logs severe events on console with prefix `S`
     ///
     /// - Parameters:
     ///   - object: Object or message to be logged
