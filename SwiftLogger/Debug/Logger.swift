@@ -13,16 +13,36 @@ import Foundation
 /// - error: Log type error
 /// - info: Log type info
 /// - debug: Log type debug
-/// - verbose: Log type verbose
+/// - verbose: Log type verbose, aka trace
 /// - warning: Log type warning
-/// - severe: Log type severe
-enum LogEvent: String {
-    case e = "E" // error
-    case i = "I" // info
-    case d = "D" // debug
-    case v = "V" // verbose
-    case w = "W" // warning
-    case s = "S" // severe
+/// - severe: Log type severe, aka critical
+enum LogEvent: Int {
+    case s = 1 // severe
+    case e = 2 // error
+    case w = 3 // warning
+    case i = 4 // info
+    case d = 5 // debug
+    case v = 6 // verbose
+}
+
+extension LogEvent {
+  static func <= (lhs: LogEvent, rhs: LogEvent) -> Bool {
+    return lhs.rawValue <= rhs.rawValue
+  }
+}
+
+extension LogEvent: CustomStringConvertible {
+  
+    var description: String {
+      switch self {
+      case .s: return "S"
+      case .e: return "E"
+      case .w: return "W"
+      case .i: return "I"
+      case .d: return "D"
+      case .v: return "V"
+      }
+    }
 }
 
 
@@ -42,7 +62,8 @@ func printer(_ string: String) {
 class Log {
     // Allow to replace printer method, e.g. to use NSLog
     public static var print = printer
-    
+    public static var level = LogEvent.d
+
     static var dateFormat = "yyyy-MM-dd HH:mm:ssSSS"
     static var dateFormatter: DateFormatter {
         let formatter = DateFormatter()
@@ -59,8 +80,12 @@ class Log {
         return false
         #endif
     }
-    
-    // MARK: - Loging methods
+
+    private static func isLogged(_ logEvent: LogEvent) -> Bool {
+      return logEvent <= level
+    }
+
+    // MARK: - Logging methods
     
     
     /// Logs error messages on console with prefix `E`
@@ -155,10 +180,10 @@ class Log {
   ///   - column: Column number of the log message
   ///   - funcName: Name of the function from where the logging is done
   private class func log(_ object: Any, logEvent: LogEvent, filename: String, line: Int, column: Int, funcName: String) {
-      guard isLoggingEnabled else {
+      guard isLoggingEnabled, isLogged(logEvent) else {
           return
       }
-      Log.print("\(logEvent.rawValue)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
+      Log.print("\(logEvent)[\(sourceFileName(filePath: filename))]:\(line) \(column) \(funcName) -> \(object)")
   }
 }
 

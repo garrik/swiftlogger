@@ -32,6 +32,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
    
         Log.print = printToNSLog
+        Log.level = .i
 
         // Logging simple string message
         Log.d("This is a DEBUG message") // DEBUG log
